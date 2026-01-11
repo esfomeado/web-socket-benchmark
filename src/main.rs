@@ -198,7 +198,7 @@ mod tokio_tungstenite_banchmark {
         let mut ws = WebSocketStream::from_raw_socket(&mut stream, Role::Client, None).await;
         let send = Instant::now();
         for _ in 0..ITER {
-            ws.feed(Message::Text(MSG.to_owned())).await?;
+            ws.feed(Message::Text(MSG.into())).await?;
         }
         ws.close(None).await?;
         let send = send.elapsed();
@@ -221,7 +221,7 @@ mod tokio_tungstenite_banchmark {
         let recv = Instant::now();
         for _ in 0..ITER {
             match ws.next().await.unwrap()? {
-                Message::Text(data) => assert_eq!(MSG, data),
+                Message::Text(data) => assert_eq!(data, MSG),
                 _ => unimplemented!(),
             }
         }

@@ -163,7 +163,7 @@ fn raw_waker() -> RawWaker {
 
 fn no_op(_: *const ()) {}
 
-pub fn block_on<Fut>(mut fut: Fut) -> Fut::Output
+pub fn block_on<Fut>(fut: Fut) -> Fut::Output
 where
     Fut: std::future::Future,
 {
